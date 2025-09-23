@@ -15,7 +15,11 @@ config({ path: "./.env" });
 
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL_ONE, process.env.FRONTEND_URL_TWO],
+    origin: [
+      "https://medicore-web1.netlify.app/",
+      "http://localhost:5173",
+      "http://localhost:5174",
+    ],
     method: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })
