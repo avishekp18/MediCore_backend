@@ -1,5 +1,5 @@
 import express from "express";
-import { dbConnection } from "./database/dbConnection.js";
+import { connectDB } from "./database/dbConnection.js";
 import { config } from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -39,7 +39,7 @@ app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/appointment", appointmentRouter);
 
-dbConnection();
+connectDB();
 
 app.use(errorMiddleware);
 export default app;
