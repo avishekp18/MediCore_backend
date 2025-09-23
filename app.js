@@ -16,12 +16,12 @@ config({ path: "./.env" });
 app.use(
   cors({
     origin: [
-      "https://medicore-web1.netlify.app",
+      "https://medicore-web1.netlify.app", // remove trailing slash
       "http://localhost:5173",
       "http://localhost:5174",
     ],
-    method: ["GET", "POST", "DELETE", "PUT"],
-    credentials: true,
+    methods: ["GET", "POST", "DELETE", "PUT"],
+    credentials: true, // allow cookies
   })
 );
 

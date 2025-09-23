@@ -230,7 +230,12 @@ export const logout = (tokenName) =>
   catchAsyncErrors(async (req, res) => {
     res
       .status(200)
-      .cookie(tokenName, "", { httpOnly: true, expires: new Date(0) })
+      .cookie(tokenName, "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // required for HTTPS
+        sameSite: "none", // allows cross-origin cookies
+        expires: new Date(0),
+      })
       .json({
         success: true,
         message: `${tokenName.replace("Token", "")} logged out successfully.`,
