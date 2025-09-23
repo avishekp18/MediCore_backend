@@ -1,14 +1,18 @@
-// database/dbConnection.js
 import mongoose from "mongoose";
 
-export const connectDB = async () => {
+const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      dbName: "medicore",
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      // these options are no longer needed in Mongoose v6+
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true,
     });
-    console.log("✅ MongoDB connected successfully");
-  } catch (err) {
-    console.error("❌ Error connecting to database:", err);
-    process.exit(1);
+
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.error("❌ Error connecting to database:", error);
+    process.exit(1); // Stop the app if DB fails
   }
 };
+
+export default connectDB;

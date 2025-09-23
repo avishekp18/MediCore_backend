@@ -1,5 +1,5 @@
 import express from "express";
-import { connectDB } from "./database/dbConnection.js";
+import connectDB from "./database/dbConnection.js";
 import { config } from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -16,7 +16,7 @@ config({ path: "./.env" });
 app.use(
   cors({
     origin: [
-      "https://medicore-web1.netlify.app/",
+      "https://medicore-web1.netlify.app",
       "http://localhost:5173",
       "http://localhost:5174",
     ],
