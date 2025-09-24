@@ -28,6 +28,7 @@ router.post(
   addNewDoctor
 );
 router.get("/doctors", authenticate("Admin", "adminToken"), getAllDoctors);
+router.get("/doctor", authenticate("Patient", "patientToken"), getAllDoctors);
 router.get("/admin/me", authenticate("Admin", "adminToken"), getUserDetails);
 router.get(
   "/admin/logout",
