@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import { User } from "./userSchema.js";
-import { dbConnection } from "../database/dbConnection.js";
+import connectDB from "../database/dbConnection.js";
 import { config } from "dotenv";
 import path from "path";
 
 config({ path: path.resolve("../.env") }); // one folder up
-dbConnection();
+connectDB();
 
 const seedAdmin = async () => {
   try {

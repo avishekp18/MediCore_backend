@@ -19,6 +19,7 @@ app.use(
       "https://medicore-web1.netlify.app", // remove trailing slash
       "http://localhost:5173",
       "http://localhost:5174",
+      "https://medicore-admin.netlify.app/login",
     ],
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true, // allow cookies
