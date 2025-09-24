@@ -1,5 +1,5 @@
 import express from "express";
-import { authenticate, isAuthorized } from "../middlewares/auth.js";
+import { authenticate } from "../middlewares/auth.js";
 import {
   addNewAdmin,
   addNewDoctor,
@@ -12,15 +12,34 @@ import {
 
 const router = express.Router();
 
+/**
+ * =========================
+ * LOGIN & REGISTRATION
+ * =========================
+ */
+router.post("/login", login);
+router.post("/patient/register", patientRegister);
+
+/**
+ * =========================
+ * USER INFO
+ * =========================
+ */
+// Admin info
 router.get("/admin/me", authenticate("Admin", "adminToken"), getUserDetails);
 
+// Patient info
 router.get(
   "/patient/me",
   authenticate("Patient", "patientToken"),
   getUserDetails
 );
 
-// Admin routes
+/**
+ * =========================
+ * ADMIN ROUTES
+ * =========================
+ */
 router.post("/admin/addnew", authenticate("Admin", "adminToken"), addNewAdmin);
 router.post(
   "/doctor/addnew",
@@ -28,29 +47,20 @@ router.post(
   addNewDoctor
 );
 router.get("/doctors", authenticate("Admin", "adminToken"), getAllDoctors);
+
+/**
+ * =========================
+ * PATIENT ROUTES
+ * =========================
+ */
 router.get("/doctor", authenticate("Patient", "patientToken"), getAllDoctors);
-router.get("/admin/me", authenticate("Admin", "adminToken"), getUserDetails);
-router.get(
-  "/admin/logout",
-  authenticate("Admin", "adminToken"),
-  logout("adminToken")
-);
 
-//login
-router.post("/login", login);
-// Patient Registration
-router.post("/patient/register", patientRegister);
-
-// Patient routes
-router.get(
-  "/patient/me",
-  authenticate("Patient", "patientToken"),
-  getUserDetails
-);
-router.get(
-  "/patient/logout",
-  authenticate("Patient", "patientToken"),
-  logout("patientToken")
-);
+/**
+ * =========================
+ * LOGOUT ROUTES
+ * =========================
+ */
+router.get("/admin/logout", authenticate("Admin", "adminToken"), logout);
+router.get("/patient/logout", authenticate("Patient", "patientToken"), logout);
 
 export default router;
