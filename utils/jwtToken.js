@@ -9,7 +9,7 @@ export const generateToken = (user, message, statusCode, res) => {
     .status(statusCode)
     .cookie(user.role === "Admin" ? "adminToken" : "patientToken", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // HTTPS only
+      secure: true, // HTTPS only
       sameSite: "none", // important for cross-site (Netlify frontend → Render backend)
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })

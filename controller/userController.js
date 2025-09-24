@@ -226,18 +226,25 @@ export const getUserDetails = catchAsyncErrors(async (req, res) => {
 /**
  * Logout
  */
-export const logout = (tokenName) =>
-  catchAsyncErrors(async (req, res) => {
-    res
-      .status(200)
-      .cookie(tokenName, "", {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // required for HTTPS
-        sameSite: "none", // allows cross-origin cookies
-        expires: new Date(0),
-      })
-      .json({
-        success: true,
-        message: `${tokenName.replace("Token", "")} logged out successfully.`,
-      });
-  });
+export const logout = catchAsyncErrors(async (req, res) => {
+  // Detect role-based token
+  const tokenName =
+    req.user?.role === "Admin"
+      ? "adminToken"
+      : req.user?.role === "Doctor"
+      ? "doctorToken"
+      : "patientToken";
+
+  res
+    .status(200)
+    .cookie(tokenName, "", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None", // must be capital N
+      expires: new Date(0), // immediately expire cookie
+    })
+    .json({
+      success: true,
+      message: `${req.user?.role || "User"} logged out successfully.`,
+    });
+});

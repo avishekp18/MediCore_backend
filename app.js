@@ -13,14 +13,23 @@ import path from "path";
 const app = express();
 config({ path: "./.env" });
 
+const allowedOrigins = [
+  "https://medicore-web1.netlify.app",
+  "https://medicore-admin.netlify.app",
+  "http://localhost:5173",
+  "http://localhost:5174",
+];
+
 app.use(
   cors({
-    origin: [
-      "https://medicore-web1.netlify.app", // remove trailing slash
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "https://medicore-admin.netlify.app/login",
-    ],
+    origin: function (origin, callback) {
+      console.log("🔎 Incoming request from origin:", origin);
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true); // allow request
+      } else {
+        callback(new Error("❌ Not allowed by CORS: " + origin));
+      }
+    },
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true, // allow cookies
   })
