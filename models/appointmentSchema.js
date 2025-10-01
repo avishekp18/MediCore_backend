@@ -28,16 +28,6 @@ const appointmentSchema = new mongoose.Schema(
       minlength: [11, "Phone number must contain exactly 11 digits!"],
       maxlength: [11, "Phone number must contain exactly 11 digits!"],
     },
-    nic: {
-      type: String,
-      required: [true, "NIC is required!"],
-      minlength: [13, "NIC must contain exactly 13 digits!"],
-      maxlength: [13, "NIC must contain exactly 13 digits!"],
-    },
-    dob: {
-      type: Date,
-      required: [true, "Date of birth is required!"],
-    },
     gender: {
       type: String,
       required: [true, "Gender is required!"],
