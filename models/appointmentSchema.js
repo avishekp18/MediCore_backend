@@ -25,8 +25,8 @@ const appointmentSchema = new mongoose.Schema(
     phone: {
       type: String,
       required: [true, "Phone is required!"],
-      minlength: [11, "Phone number must contain exactly 11 digits!"],
-      maxlength: [11, "Phone number must contain exactly 11 digits!"],
+      minlength: [10, "Phone number must contain exactly 11 digits!"],
+      maxlength: [10, "Phone number must contain exactly 11 digits!"],
     },
     gender: {
       type: String,
