@@ -8,6 +8,8 @@ import {
   logout,
   login,
   patientRegister,
+  deleteDoc,
+  editDoc,
 } from "../controller/userController.js";
 
 const router = express.Router();
@@ -47,6 +49,9 @@ router.post(
   addNewDoctor
 );
 router.get("/doctors", authenticate("Admin", "adminToken"), getAllDoctors);
+
+router.delete("/admin/:id", authenticate("Admin", "adminToken", deleteDoc));
+router.put("/admin/:id", authenticate("Admin", "adminToken", editDoc));
 
 /**
  * =========================

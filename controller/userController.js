@@ -248,3 +248,46 @@ export const logout = catchAsyncErrors(async (req, res) => {
       message: `${req.user?.role || "User"} logged out successfully.`,
     });
 });
+
+export const deleteDoc = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  const doc = await User.findByIdAndDelete(id);
+
+  if (!doc) {
+    return res.status(404).json({ message: "Doctor not found" });
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Doctor deleted successfully!",
+  });
+});
+
+// Edit / Update Doctor
+export const editDoc = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+
+  // Find the doctor by ID
+  const doctor = await User.findById(id);
+  if (!doctor) {
+    return res.status(404).json({ message: "Doctor not found" });
+  }
+
+  // Update allowed fields
+  const { firstName, lastName, email, phone, doctorDepartment } = req.body;
+
+  if (firstName !== undefined) doctor.firstName = firstName;
+  if (lastName !== undefined) doctor.lastName = lastName;
+  if (email !== undefined) doctor.email = email;
+  if (phone !== undefined) doctor.phone = phone;
+  if (doctorDepartment !== undefined)
+    doctor.doctorDepartment = doctorDepartment;
+
+  await doctor.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Doctor updated successfully!",
+    doctor, // optionally return updated doctor
+  });
+});
