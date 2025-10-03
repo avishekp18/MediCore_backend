@@ -50,8 +50,8 @@ router.post(
 );
 router.get("/doctors", authenticate("Admin", "adminToken"), getAllDoctors);
 
-router.delete("/admin/:id", authenticate("Admin", "adminToken", deleteDoc));
-router.put("/admin/:id", authenticate("Admin", "adminToken", editDoc));
+router.delete("doctor/:id", authenticate("Admin", "adminToken", deleteDoc));
+router.put("doctor/:id", authenticate("Admin", "adminToken", editDoc));
 
 /**
  * =========================
