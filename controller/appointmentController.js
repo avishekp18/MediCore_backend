@@ -146,3 +146,16 @@ export const getUserAppointments = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({ success: true, appointments });
 });
+
+export const dltAppointment = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  const dlt = await Appointment.findByIdAndDelete(id);
+
+  if (!dlt) {
+    return next(new ErrorHandler("Appointment not found!", 404));
+  }
+  res.status(200).json({
+    sucess: true,
+    message: "Appointement deleted sucessfully!",
+  });
+});

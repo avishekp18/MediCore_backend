@@ -5,6 +5,7 @@ import {
   postAppointment,
   updateAppointmentStatus,
   getUserAppointments,
+  dltAppointment,
 } from "../controller/appointmentController.js";
 import { authenticate, isAuthorized } from "../middlewares/auth.js";
 
@@ -27,6 +28,11 @@ router.get(
   "/user/:id",
   authenticate("Patient", "patientToken"),
   getUserAppointments
+);
+router.delete(
+  "/user/:id",
+  authenticate("Patient", "patientToken"),
+  dltAppointment
 );
 
 // Delete appointment (Admin only)
